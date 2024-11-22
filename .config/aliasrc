@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Basic commands
+alias \
+	la="ls -a" \
+	ll="ls -l" \
+  lla="ls -la" \
+	lr="ls -lrt" \
+	mv="mv -iv" \
+	cp="cp -iv" \
+	rm="rm -iv" \
+	tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode" \

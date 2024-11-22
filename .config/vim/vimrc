@@ -1,0 +1,80 @@
+" Keybinds
+so $XDG_CONFIG_HOME/vim/keybind.vim
+
+" Basic
+syntax on
+set relativenumber number
+set encoding=utf-8
+set fileencoding=utf-8
+set termencoding=utf-8
+set ic
+set hlsearch
+set expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set ruler
+set nowrapscan
+set noeb vb t_vb=
+set splitbelow
+set splitright
+set backspace=indent,eol,start
+set wildmenu wildmode=longest:full,full wildoptions=pum
+autocmd VimEnter  * silent exec "! echo -ne '\e[2 q'"
+autocmd VimResume * silent exec "! echo -ne '\e[2 q'"
+runtime ftplugin/man.vim
+let g:ft_man_open_mode = 'vert'
+
+command! MakeTags !ctags -R .
+
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'relative': v:false } }
+function ClearQuickfixList()
+  call setqflist([])
+endfunction
+command! ClearQuickfixList call ClearQuickfixList()
+
+nnoremap <leader>vx :Vex<CR>:vert resize 30<CR>
+
+" XDG Base Directory Configuration - Begin
+set runtimepath^=$XDG_CONFIG_HOME/vim
+set runtimepath+=$XDG_DATA_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
+
+set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
+set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
+
+let g:netrw_home = $XDG_DATA_HOME."/vim"
+call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
+
+set backupdir=$XDG_STATE_HOME/vim/backup | call mkdir(&backupdir, 'p')
+set directory=$XDG_STATE_HOME/vim/swap   | call mkdir(&directory, 'p')
+set undodir=$XDG_STATE_HOME/vim/undo     | call mkdir(&undodir,   'p')
+set viewdir=$XDG_STATE_HOME/vim/view     | call mkdir(&viewdir,   'p')
+
+if !has('nvim') | set viminfofile=$XDG_STATE_HOME/vim/viminfo | endif
+" XDG Base Directory Configuration - End
+
+" Plugin
+call plug#begin('$XDG_CONFIG_HOME/vim/plugged')
+Plug 'junegunn/fzf'
+Plug 'morhetz/gruvbox'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+" see: https://github.com/iamcco/markdown-preview.nvim/issues/50
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+" post install (yarn install | npm install) then load plugin only for editing supported files
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install --frozen-lockfile --production',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+call plug#end()
+
+" Colorscheme gruvbox
+autocmd vimenter * ++nested colorscheme gruvbox
+set background=dark    " Setting dark mode
+let g:gruvbox_contrast_dark='medium'

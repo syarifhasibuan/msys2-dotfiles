@@ -1,0 +1,14 @@
+[user]
+	email = syarifhsb.dev@gmail.com
+	name = Syarif Hasibuan
+[alias]
+	co = checkout
+	st = status
+	ci = commit
+	br = branch
+  stuf = st --untracked-files=no
+  dt = difftool
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = true
